@@ -1,5 +1,15 @@
 const express = require("express");
 
+const mongoose = require("mongoose");
+
+mongoose
+  .connect(
+    "mongodb+srv://piiquante:ModelsSauce@cluster0.n0ouu6g.mongodb.net/",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Connexion à MongoDB réussie !"))
+  .catch(() => console.log("Connexion à MongoDB échouée !"));
+
 const app = express();
 
 app.use(express.json());
