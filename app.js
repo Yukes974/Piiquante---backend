@@ -2,6 +2,8 @@ const express = require("express");
 
 const mongoose = require("mongoose");
 
+const Sauce = require("./models/Sauce");
+
 mongoose
   .connect(
     "mongodb+srv://piiquante:ModelsSauce@cluster0.n0ouu6g.mongodb.net/",
@@ -28,8 +30,14 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/sauces", (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({ message: "Objet créé !" });
+  delete req.body._id;
+  const sauce = new Sauce({
+    ...req.body,
+  });
+  sauce
+    .save()
+    .then(() => res.status(201).json({ message: "Objet enregistré !" }))
+    .catch((error) => res.status(400).json({ error }));
 });
 
 app.get("/api/sauces", (req, res, next) => {
